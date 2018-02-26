@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { findDOMNode } from 'react-dom'
 
 // require('hammerjs') when in a browser. This is safe because Hammer is only
 // invoked in componentDidMount, which is not executed on the server.
@@ -109,7 +110,7 @@ export default class HammerComponent extends React.Component {
 	};
 
 	componentDidMount() {
-		this.hammer = new Hammer(this.domElement);
+		this.hammer = new Hammer(findDOMNode(this));
 		updateHammer(this.hammer, this.props);
 	}
 
@@ -135,14 +136,6 @@ export default class HammerComponent extends React.Component {
 				props[i] = this.props[i];
 			}
 		}, this);
-
-		var self = this;
-		props.ref = function(domElement) {
-			if (self.props.ref) {
-				self.props.ref(domElement);
-			}
-			self.domElement = domElement;
-		};
 
 		// Reuse the child provided
 		// This makes it flexible to use whatever element is wanted (div, ul, etc)

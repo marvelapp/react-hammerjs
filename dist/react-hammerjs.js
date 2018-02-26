@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('prop-types'), require('react')) :
-	typeof define === 'function' && define.amd ? define(['prop-types', 'react'], factory) :
-	(global.Hammer = factory(global.PropTypes,global.React));
-}(this, (function (PropTypes,React) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('prop-types'), require('react'), require('react-dom')) :
+	typeof define === 'function' && define.amd ? define(['prop-types', 'react', 'react-dom'], factory) :
+	(global.Hammer = factory(global.PropTypes,global.React,global.ReactDOM));
+}(this, (function (PropTypes,React,reactDom) { 'use strict';
 
 PropTypes = PropTypes && PropTypes.hasOwnProperty('default') ? PropTypes['default'] : PropTypes;
 React = React && React.hasOwnProperty('default') ? React['default'] : React;
@@ -123,7 +123,7 @@ var HammerComponent = function (_React$Component) {
 	_createClass(HammerComponent, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			this.hammer = new Hammer(this.domElement);
+			this.hammer = new Hammer(reactDom.findDOMNode(this));
 			updateHammer(this.hammer, this.props);
 		}
 	}, {
@@ -152,14 +152,6 @@ var HammerComponent = function (_React$Component) {
 					props[i] = this.props[i];
 				}
 			}, this);
-
-			var self = this;
-			props.ref = function (domElement) {
-				if (self.props.ref) {
-					self.props.ref(domElement);
-				}
-				self.domElement = domElement;
-			};
 
 			// Reuse the child provided
 			// This makes it flexible to use whatever element is wanted (div, ul, etc)
