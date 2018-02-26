@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -117,7 +118,7 @@ var HammerComponent = function (_React$Component) {
 	_createClass(HammerComponent, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			this.hammer = new Hammer(this.domElement);
+			this.hammer = new Hammer(findDOMNode(this));
 			updateHammer(this.hammer, this.props);
 		}
 	}, {
@@ -146,14 +147,6 @@ var HammerComponent = function (_React$Component) {
 					props[i] = this.props[i];
 				}
 			}, this);
-
-			var self = this;
-			props.ref = function (domElement) {
-				if (self.props.ref) {
-					self.props.ref(domElement);
-				}
-				self.domElement = domElement;
-			};
 
 			// Reuse the child provided
 			// This makes it flexible to use whatever element is wanted (div, ul, etc)
